@@ -1,25 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
+import { selectFilteredContacts } from '../../redux/selectors';
+import { ContactListItem } from '../ContactListItem/ContactListItem';
 
-export default function ContactList({ contacts, deleteContact }) {
+export default function ContactList() {
+  
+
+
+  const contacts = useSelector(selectFilteredContacts);
+  
   return (
     <ul>
       {contacts.map(contact => {
         return (
-          <li key={nanoid()}>
-            <span>{`${contact.name}: ${contact.number}`}</span>
-            <button type="button" onClick={() => deleteContact(contact.id)}>
-              delete
-            </button>
-          </li>
+          <ContactListItem contact={contact} key={contact.id} />
+          
         );
       })}
     </ul>
   );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteContact: PropTypes.func.isRequired,
-};
